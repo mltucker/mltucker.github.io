@@ -1,7 +1,7 @@
-a:link {color: black;}      /* unvisited link */
-a:visited {color: black}   /* visited link */
-.word:hover {color: black; font-size: 1.5em; background: lightgrey;}     /* mouse over link */
-a:active {color: black;}    /* selected link */
+a:link {color: inherit;}      /* unvisited link */
+a:visited {color: inherit}   /* visited link */
+.word:hover {color: inherit; font-size: 1.5em; background: lightgrey;}     /* mouse over link */
+a:active {color: inherit;}    /* selected link */
 
 html {
 	font-family : "Verdana";

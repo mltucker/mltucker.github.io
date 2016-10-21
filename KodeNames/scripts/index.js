@@ -350,8 +350,10 @@ function spyMaster() {
 	//TODO: randomize or organize tiles for easier comparing
 	spyMasterMode = true;
 	for (var i = 0; i < number_of_items; i++) {
+    console.log(teams[i]);
 		document.getElementById(i).style.backgroundColor = teams[i];
-		if (teams[i] == "black") {
+		if (teams[i] == "black" || teams[i] === COLOR_BLACK) {
+      console.log(i, document.getElementById(i));
 			document.getElementById(i).style.color = "white";
 		}
 	}
