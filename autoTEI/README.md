@@ -1,4 +1,4 @@
-Accessible on github pages [here](https://mltucker.github.io/autoTEI/)
+Accessible on github pages [here](https://mltucker.github.io/autoTEI/). Source code [here](https://github.com/mltucker/autoTEI/).
 
 # Building
 

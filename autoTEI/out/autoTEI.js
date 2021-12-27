@@ -42556,6 +42556,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         node.isFootnote = true;
         node.footnoteNumber = parseInt(footnoteNumber, 10);
         node.footnotes = footnoteContent;
+        node.value = `[${footnoteNumber}]`;
         const arr = [];
         if (beforeText) {
           arr.push({ type: "text", value: beforeText });
@@ -42750,7 +42751,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         tag: "sourceDesc"
       }, /* @__PURE__ */ import_react.default.createElement(Tag, {
         tag: "p"
-      }, doc.source))))), /* @__PURE__ */ import_react.default.createElement(Tag, {
+      }, doc.source)))), /* @__PURE__ */ import_react.default.createElement(Tag, {
         tag: "text"
       }, /* @__PURE__ */ import_react.default.createElement(Tag, {
         tag: "body"
@@ -42759,8 +42760,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         attr: `type="letter" subtype="original" xml:lang="de"`
       }, /* @__PURE__ */ import_react.default.createElement(Tag, {
         tag: "pb",
-        attr: `"n=1"`
-      }), children))));
+        attr: `n="1"`
+      }), children)))));
     }
     if (node.type === "paragraph" && node.alignment === "right") {
       return /* @__PURE__ */ import_react.default.createElement("div", {
@@ -42804,7 +42805,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           attr: `ref="#"`
         }, children);
       } else if (node.highlight === "red") {
-        console.log("Found red highlight", node);
         return /* @__PURE__ */ import_react.default.createElement(Tag, {
           forceInline: true,
           tag: "todo",
@@ -42817,7 +42817,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           attr: `ref="#"`
         }, children);
       } else if (node.highlight) {
-        console.log("Found highlight", node.highlight);
+        console.warn("Found unhandled highlight", node.highlight);
       }
       if (node.isItalic && hasText(node)) {
         return /* @__PURE__ */ import_react.default.createElement(Tag, {
@@ -42839,6 +42839,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var DocView_default = ({ name, content }) => {
     const [doc, setDoc] = (0, import_react.useState)(() => "");
     const preRef = (0, import_react.useRef)(null);
+    const [isCopied, setIsCopied] = (0, import_react.useState)(false);
     const copy = (0, import_react.useCallback)((e) => {
       e.preventDefault();
       const text = preRef.current.innerText;
@@ -42855,13 +42856,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         selection.addRange(range);
         const success = document.execCommand("copy");
         if (success) {
-          console.log("Copied text");
+          setIsCopied(true);
+          setTimeout(() => {
+            setIsCopied(() => false);
+          }, 2e3);
         }
       } catch (err) {
       } finally {
         document.body.removeChild(temp);
       }
-    });
+    }, [setIsCopied]);
     (0, import_react.useEffect)(() => {
       parseDocument(name, content).then((res) => {
         setDoc(res);
@@ -42871,7 +42875,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       href: "#",
       onClick: copy,
       id: "copy"
-    }, "copy to clipboard"), /* @__PURE__ */ import_react.default.createElement("pre", {
+    }, isCopied ? "copied!" : "copy to clipboard"), /* @__PURE__ */ import_react.default.createElement("pre", {
       id: "output",
       ref: preRef
     }, /* @__PURE__ */ import_react.default.createElement(Node, {
@@ -42931,7 +42935,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       id: "main-form"
     }, /* @__PURE__ */ import_React.default.createElement("div", {
       id: "main-form-content"
-    }, /* @__PURE__ */ import_React.default.createElement("p", {
+    }, /* @__PURE__ */ import_React.default.createElement("div", {
+      id: "logo"
+    }, "auto TEI"), /* @__PURE__ */ import_React.default.createElement("p", {
       className: "instructions"
     }, "Who are you?"), /* @__PURE__ */ import_React.default.createElement("input", {
       type: "text",
